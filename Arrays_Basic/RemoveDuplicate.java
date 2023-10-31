@@ -1,4 +1,3 @@
-package Arrays_Basic;
 
 import java.util.*;
 
