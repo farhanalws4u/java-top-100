@@ -43,3 +43,6 @@ public class DisjointArrays {
         System.out.println(checkDisjointEfficient(arrOne, arrTwo));
     }
 }
+
+// we can also check that one array is subset of another array using the same
+// approach.
