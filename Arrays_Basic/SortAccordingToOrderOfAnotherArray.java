@@ -1,52 +1,62 @@
 import java.util.*;
 
-public class SortAccordingToOrderOfAnotherArray {
+class sortAccordingToOrderOfAnotherArray {
 
-    static void sortAccordingToOrder(int[] arr, int[] order) {
-        int[] visited = new int[arr.length];
+    static void sortAccording(int[] arr, int[] order) {
         int temp[] = new int[arr.length];
-        int visitIndex = 0;
+        int resIndex = 0;
+        int visited[] = new int[arr.length];
 
-        for (int k = 0; k < arr.length; k++) {
-            temp[k] = arr[k];
-            visited[k] = 0;
+        for (int i = 0; i < arr.length; i++) {
+            temp[i] = arr[i];
+            visited[i] = 0;
         }
 
         Arrays.sort(temp);
 
-        for (int i = 0; i < order.length; i++) {
-
-            if (binarySearch(arr, order[i])) {
-
+        for (int j = 0; j < order.length; j++) {
+            int foundIndex = binarySearch(temp, order[j]);
+            for (int k = foundIndex; k < temp.length && (temp[k] == order[j]); k++) {
+                arr[resIndex++] = temp[k];
+                visited[k] = 1;
             }
         }
 
+        for (int l = 0; l < arr.length; l++) {
+            if (visited[l] == 0) {
+                arr[resIndex++] = temp[l];
+            }
+        }
     }
 
-    static boolean binarySearch(int[] arr, int ele) {
-        int len = arr.length;
+    public static int binarySearch(int[] arr, int target) {
         int left = 0;
-        int right = len - 1;
+        int right = arr.length - 1;
 
         while (left <= right) {
-            int mid = (left + right) / 2;
+            int mid = left + (right - left) / 2;
 
-            if (arr[mid] > ele) {
-                right = mid - 1;
-            } else if (arr[mid] < ele) {
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
                 left = mid + 1;
             } else {
-                return true;
+                right = mid - 1;
             }
-
         }
-        return false;
+
+        return -1;
     }
 
     public static void main(String args[]) {
-        int[] arr = { 1, 2, 3, 4, 3, 2, 4, 2, 5 };
-        int[] orderArray = { 4, 2, 1, 3 };
+        int arr1[] = { 1, 2, 3, 4, 3, 2, 4, 2, 5 };
+        int arr2[] = { 4, 2, 1, 3 };
 
-        sortAccordingToOrder(arr, orderArray);
+        sortAccording(arr1, arr2);
+
+        System.out.println("Array after sorting: ");
+        for (int ele : arr1) {
+            System.out.println(ele);
+        }
     }
 }
